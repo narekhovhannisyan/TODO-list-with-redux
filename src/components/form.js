@@ -11,7 +11,6 @@ export class Form extends Component {
         <input
           ref={input => {this.textInput = input}}
           onKeyPress={(event) => {
-            console.log('onKeyPress log this: ', event.key)
             if (event.key === 'Enter') {
               this.submitHandler()
             }

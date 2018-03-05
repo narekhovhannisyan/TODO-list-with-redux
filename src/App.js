@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Form, Row } from './components/form'
 import { SubmitButton, RemoveButton } from './components/buttons'
-import { Loader } from './components/loader'
 
 class App extends Component {
   constructor () {
@@ -49,27 +48,12 @@ class App extends Component {
     })
   }
 
-  incrementCount = () => {
-    const count = this.state.dotCount < this.state.dotMaxCount - 1 ? this.state.dotCount + 1 : 0
-
-    this.setState({
-      ...this.state,
-      dotCount: count
-    })
-  }
-
   render () {
     return (
       <div className="App">
         <Form buttonName={'Submit'}
               submitValue={this.submitValue}
         />
-        {
-          <Loader
-            loadCount={this.state.dotCount}
-            incrementist={this.incrementCount}
-          />
-        }
         {this.state.list.map((item, index) => {
           return (
             <div key={index}>
