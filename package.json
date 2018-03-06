@@ -15,7 +15,9 @@
     "react-dom": "~16.2.0",
     "react-redux": "~5.0.7",
     "redux": "~3.7.2",
-    "webpack": "~4.1.0"
+    "webpack": "~4.1.0",
+    "webpack-cli": "~2.0.10",
+    "webpack-dev-server": "~3.1.0"
   },
   "keywords": [
     "todo",
@@ -28,5 +30,8 @@
   "bugs": {
     "url": "https://github.com/narekhovhannisyan/TODO-list-with-redux/issues"
   },
-  "homepage": "https://github.com/narekhovhannisyan/TODO-list-with-redux#readme"
+  "homepage": "https://github.com/narekhovhannisyan/TODO-list-with-redux#readme",
+  "devDependencies": {
+    "webpack-cli": "^2.0.10"
+  }
 }
