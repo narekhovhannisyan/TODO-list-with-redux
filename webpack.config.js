@@ -1,10 +1,30 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require('path')
+
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  entry: "./src",
+  entry: './src/root',
   output: {
-    path: __dirname + "/dist",
-    filename: "source.js",
+    path: __dirname + '/dist',
+    filename: 'source.js',
   },
-  plugins: [new HtmlWebpackPlugin()]
-};
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /(node_modules)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
+      }
+    ]
+  },
+  plugins: [new HtmlWebpackPlugin({
+    template: path.resolve('./src/root/index.html'),
+    filename: 'index.html',
+    inject: 'body'
+  })]
+}
