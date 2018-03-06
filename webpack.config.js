@@ -4,7 +4,7 @@ module.exports = {
   entry: "./src",
   output: {
     path: __dirname + "/dist",
-    filename: "khchos_greatest_bundle.js"
+    filename: "source.js",
   },
   plugins: [new HtmlWebpackPlugin()]
 };
