@@ -1,15 +1,15 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
+import Form from "./form";
+import { store } from "../redux/store";
+import { Provider } from "react-redux";
 
 class App extends Component {
-  constructor () {
-    super()
-  }
-
-  render () {
+  render() {
     return (
-      <h1>mock-h1</h1>
-    )
+      <Provider store={store}>
+        <Form />
+      </Provider>
+    );
   }
 }
-
-export default App
+export default App;
