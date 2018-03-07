@@ -1,28 +1,50 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { store } from "../redux/store";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
-import { addTodo } from "../redux/actions";
+import { addTodo, removeTodo, markAsResolved } from '../redux/actions'
 
-const actionCreators = dispatch => bindActionCreators({ addTodo }, dispatch);
+import { Button } from './buttons'
+
+const actionCreators = dispatch => bindActionCreators({ addTodo, removeTodo, markAsResolved }, dispatch)
 
 const mapStateToProps = store => ({
   todos: store.todos
-});
+})
 
 class Form extends Component {
-  render() {
+  submitTodo () {
+    if (this.textInput.value !== '') {
+      this.props.addTodo(this.textInput.value)
+    }
+
+    this.textInput.value = ''
+  }
+
+  render () {
     return (
       <div>
-        <input ref={input => (this.textInput = input)} />
-        <button onClick={() => this.props.addTodo(this.textInput.value)}>
-          Submit
-        </button>
-        <ul>{this.props.todos.map(todo => <li>{todo.text}</li>)}</ul>
+        <input ref={input => (this.textInput = input)}
+               onKeyPress={event => {
+                 if (event.key === 'Enter') {
+                   this.submitTodo()
+                 }
+               }}/>
+        <Button buttonTitle='Submit TODO'
+                onClick={() => this.submitTodo()}
+        />
+        <ul>{this.props.todos.map((todo, index) =>
+          <div>
+            {todo.completed}
+            <li style={{ textDecoration: 'line-through' }}>{todo.text}</li>
+            <Button buttonTitle='Remove Todo'
+                    onClick={() => this.props.removeTodo(index)}/>
+
+          </div>
+        )}</ul>
       </div>
-    );
+    )
   }
 }
 
-export default connect(mapStateToProps, actionCreators)(Form);
+export default connect(mapStateToProps, actionCreators)(Form)
