@@ -1,11 +1,22 @@
-export default
-const todo = (state = [], action) => {
+const initialState = {
+  todos: []
+};
+
+export default function todos(state = initialState, action) {
   switch (action.type) {
-    case 'ADD_TODO':
-      return [...state, {
-        id: state.length,
-        text: action.text,
-        completed: false
-      }]
+    case "ADD_TODO":
+      return {
+        ...state,
+        todos: [
+          ...state.todos,
+          {
+            id: state.todos.length,
+            text: action.text,
+            completed: false
+          }
+        ]
+      };
+    default:
+      return state;
   }
 }
