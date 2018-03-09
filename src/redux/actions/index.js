@@ -18,3 +18,16 @@ export const markAsResolved = index => {
     value: index
   };
 };
+export const showUnResolved = () => {
+  return {
+    type: "FILTER-UNRESOLVED",
+    filter: "UNRESOLVED"
+  };
+};
+
+export const showResolved = () => {
+  return {
+    type: "FILTER-RESOLVED",
+    filter: "RESOLVED"
+  };
+};
