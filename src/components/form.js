@@ -1,6 +1,9 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+import { Button } from './buttons'
+import { Submit } from './submit'
 
 import {
   addTodo,
@@ -9,9 +12,7 @@ import {
   showResolved,
   showUnResolved,
   showAll
-} from "../redux/actions";
-
-import { Button } from "./buttons";
+} from '../redux/actions'
 
 const actionCreators = dispatch =>
   bindActionCreators(
@@ -24,56 +25,43 @@ const actionCreators = dispatch =>
       showAll
     },
     dispatch
-  );
+  )
 
 const mapStateToProps = store => ({
   todos: store.todos,
   filter: store.filter
-});
+})
 
 class Form extends Component {
-  submitTodo() {
-    if (this.textInput.value !== "") {
-      this.props.addTodo(this.textInput.value);
-    }
-
-    this.textInput.value = "";
-  }
-  visibilityFilter(todos, filter) {
+  visibilityFilter (todos, filter) {
     switch (filter) {
-      case "RESOLVED":
-        return todos.filter(todo => todo.completed === true);
-
-      case "UNRESOLVED":
-        return todos.filter(todo => todo.completed === false);
-      case "SHOW=ALL":
-        return todos;
+      case 'RESOLVED':
+        return todos.filter(todo => todo.completed === true)
+      case 'UNRESOLVED':
+        return todos.filter(todo => todo.completed === false)
+      case 'SHOW=ALL':
+        return todos
       default:
-        return todos;
+        return todos
     }
   }
-  render() {
+
+  render () {
     const filteredTodos = this.visibilityFilter(
       this.props.todos,
       this.props.filter
-    );
+    )
+
     return (
       <div>
-        <input
-          ref={input => (this.textInput = input)}
-          onKeyPress={event => {
-            if (event.key === "Enter") {
-              this.submitTodo();
-            }
-          }}
-        />
-        <Button buttonTitle="Submit TODO" onClick={() => this.submitTodo()} />
+        <Submit submitTodo={(text) => this.props.addTodo(text)}/>
+        <Submit submitTodo={(text) => this.props.addTodo(text)}/>
         <ul>
           {filteredTodos.map((todo, index) => (
             <div>
               <li
                 style={{
-                  textDecoration: todo.completed ? "line-through" : "none"
+                  textDecoration: todo.completed ? 'line-through' : 'none'
                 }}
               >
                 {todo.text}
@@ -83,7 +71,7 @@ class Form extends Component {
                 onClick={() => this.props.removeTodo(index)}
               />
               <Button
-                buttonTitle={todo.completed ? "Resolved" : "Resolve"}
+                buttonTitle={todo.completed ? 'Resolved' : 'Resolve'}
                 onClick={() => this.props.markAsResolved(index)}
               />
             </div>
@@ -92,33 +80,33 @@ class Form extends Component {
         <a
           href="#"
           style={{
-            visibility: this.props.todos.length === 0 ? "hidden" : "visible"
+            visibility: this.props.todos.length === 0 ? 'hidden' : 'visible'
           }}
           onClick={() => this.props.showResolved()}
         >
           RESOLVED
-        </a>{" "}
+        </a>{' '}
         <a
           href="#"
           style={{
-            visibility: this.props.todos.length === 0 ? "hidden" : "visible"
+            visibility: this.props.todos.length === 0 ? 'hidden' : 'visible'
           }}
           onClick={() => this.props.showUnResolved()}
         >
           UNRESOLVED
-        </a>{" "}
+        </a>{' '}
         <a
           href="#"
           style={{
-            visibility: this.props.todos.length === 0 ? "hidden" : "visible"
+            visibility: this.props.todos.length === 0 ? 'hidden' : 'visible'
           }}
           onClick={() => this.props.showAll()}
         >
           SHOW ALL
         </a>
       </div>
-    );
+    )
   }
 }
 
-export default connect(mapStateToProps, actionCreators)(Form);
+export default connect(mapStateToProps, actionCreators)(Form)
