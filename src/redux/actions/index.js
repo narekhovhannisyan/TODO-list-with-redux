@@ -31,3 +31,9 @@ export const showResolved = () => {
     filter: "RESOLVED"
   };
 };
+export const showAll = () => {
+  return {
+    type: "SHOW-ALL",
+    filter: "NONE"
+  };
+};
