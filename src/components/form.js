@@ -2,15 +2,25 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import { addTodo, removeTodo, markAsResolved } from "../redux/actions";
+import {
+  addTodo,
+  removeTodo,
+  markAsResolved,
+  showResolved,
+  showUnResolved
+} from "../redux/actions";
 
 import { Button } from "./buttons";
 
 const actionCreators = dispatch =>
-  bindActionCreators({ addTodo, removeTodo, markAsResolved }, dispatch);
+  bindActionCreators(
+    { addTodo, removeTodo, markAsResolved, showResolved, showUnResolved },
+    dispatch
+  );
 
 const mapStateToProps = store => ({
-  todos: store.todos
+  todos: store.todos,
+  filter: store.filter
 });
 
 class Form extends Component {
@@ -21,8 +31,22 @@ class Form extends Component {
 
     this.textInput.value = "";
   }
+  visibilityFilter(todos, filter) {
+    switch (filter) {
+      case "RESOLVED":
+        return todos.filter(todo => todo.completed === true);
 
+      case "UNRESOLVED":
+        return todos.filter(todo => todo.completed === false);
+      default:
+        return todos;
+    }
+  }
   render() {
+    const filteredTodos = this.visibilityFilter(
+      this.props.todos,
+      this.props.filter
+    );
     return (
       <div>
         <input
@@ -35,9 +59,8 @@ class Form extends Component {
         />
         <Button buttonTitle="Submit TODO" onClick={() => this.submitTodo()} />
         <ul>
-          {this.props.todos.map((todo, index) => (
+          {filteredTodos.map((todo, index) => (
             <div>
-              {todo.completed}
               <li
                 style={{
                   textDecoration: todo.completed ? "line-through" : "none"
@@ -56,6 +79,24 @@ class Form extends Component {
             </div>
           ))}
         </ul>
+        <a
+          href="#"
+          style={{
+            visibility: this.props.todos.length === 0 ? "hidden" : "visible"
+          }}
+          onClick={() => this.props.showResolved()}
+        >
+          resolved
+        </a>{" "}
+        <a
+          href="#"
+          style={{
+            visibility: this.props.todos.length === 0 ? "hidden" : "visible"
+          }}
+          onClick={() => this.props.showUnResolved()}
+        >
+          unresolved
+        </a>
       </div>
     );
   }
