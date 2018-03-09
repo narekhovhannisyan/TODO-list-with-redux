@@ -1,10 +1,10 @@
 const initialState = {
   todos: []
-}
+};
 
-export default function todos (state = initialState, action) {
+export default function todos(state = initialState, action) {
   switch (action.type) {
-    case 'ADD_TODO':
+    case "ADD_TODO":
       return {
         ...state,
         todos: [
@@ -15,16 +15,16 @@ export default function todos (state = initialState, action) {
             completed: false
           }
         ]
-      }
-    case 'REMOVE_TODO':
+      };
+    case "REMOVE_TODO":
       return {
         ...state,
         todos: [
           ...state.todos.slice(0, action.value),
           ...state.todos.slice(action.value + 1)
         ]
-      }
-    case 'CHANGE_STATE':
+      };
+    case "CHANGE_STATE":
       return {
         ...state,
         todos: [
@@ -35,8 +35,18 @@ export default function todos (state = initialState, action) {
           },
           ...state.todos.slice(action.value + 1)
         ]
-      }
+      };
+    case "FILTER-RESOLVED":
+      return {
+        ...state,
+        filter: action.filter
+      };
+    case "FILTER-UNRESOLVED":
+      return {
+        ...state,
+        filter: action.filter
+      };
     default:
-      return state
+      return state;
   }
 }
