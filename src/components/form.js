@@ -7,14 +7,22 @@ import {
   removeTodo,
   markAsResolved,
   showResolved,
-  showUnResolved
+  showUnResolved,
+  showAll
 } from "../redux/actions";
 
 import { Button } from "./buttons";
 
 const actionCreators = dispatch =>
   bindActionCreators(
-    { addTodo, removeTodo, markAsResolved, showResolved, showUnResolved },
+    {
+      addTodo,
+      removeTodo,
+      markAsResolved,
+      showResolved,
+      showUnResolved,
+      showAll
+    },
     dispatch
   );
 
@@ -38,6 +46,8 @@ class Form extends Component {
 
       case "UNRESOLVED":
         return todos.filter(todo => todo.completed === false);
+      case "SHOW=ALL":
+        return todos;
       default:
         return todos;
     }
@@ -86,7 +96,7 @@ class Form extends Component {
           }}
           onClick={() => this.props.showResolved()}
         >
-          resolved
+          RESOLVED
         </a>{" "}
         <a
           href="#"
@@ -95,7 +105,16 @@ class Form extends Component {
           }}
           onClick={() => this.props.showUnResolved()}
         >
-          unresolved
+          UNRESOLVED
+        </a>{" "}
+        <a
+          href="#"
+          style={{
+            visibility: this.props.todos.length === 0 ? "hidden" : "visible"
+          }}
+          onClick={() => this.props.showAll()}
+        >
+          SHOW ALL
         </a>
       </div>
     );
