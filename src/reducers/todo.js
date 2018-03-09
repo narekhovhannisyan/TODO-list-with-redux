@@ -46,6 +46,11 @@ export default function todos(state = initialState, action) {
         ...state,
         filter: action.filter
       };
+    case "SHOW-ALL":
+      return {
+        ...state,
+        filter: action.filter
+      };
     default:
       return state;
   }
